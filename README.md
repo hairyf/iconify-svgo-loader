@@ -11,7 +11,7 @@ const loader1 = FileSystemSvgoLoader('./src/assets/fonts', {
 })
 ```
 
-Callback mode to obtain name and svg content
+Custom Callback mode to obtain name and svg content
 
 ```ts
 import FileSystemSvgoLoader from 'iconify-svgo-loader'
