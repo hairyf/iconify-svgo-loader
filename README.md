@@ -6,9 +6,7 @@ Normal use: default loading of presets and monochrome icon processing, prefixIds
 
 ```ts
 import FileSystemSvgoLoader from 'iconify-svgo-loader'
-const loader1 = FileSystemSvgoLoader('./src/assets/fonts', {
-  /* options */
-})
+const loader1 = FileSystemSvgoLoader('./src/assets/fonts', {/* options */})
 ```
 
 Custom Callback mode to obtain name and svg content
