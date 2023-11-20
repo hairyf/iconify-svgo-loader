@@ -27,7 +27,7 @@ export function patch(re: string, s: string) {
 
 export function defaultTransform(name: string, svg: string, _config: Config = {}) {
   const config = { plugins: defaultPlugins, multipass: true, ..._config }
-  const single = patch('fill', svg) + patch('stop-color', svg) === 1
+  const single = patch('fill=', svg) + patch('stop-color=', svg) === 1
 
   config.plugins?.push({ name: 'prefixIds', params: { prefix: name } })
 
