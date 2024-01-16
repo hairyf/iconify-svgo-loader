@@ -8,7 +8,7 @@ interface TransformConfig {
 
 export function optimize(svg: string, options: TransformConfig = {}) {
   let { config = {}, prefix } = options
-  config = { plugins: defaultPlugins, multipass: true, ...config }
+  config = { plugins: [...defaultPlugins], multipass: true, ...config }
 
   const colors = new Set<string>([
     ...extract(svg, 'fill'),
@@ -31,7 +31,7 @@ export function optimize(svg: string, options: TransformConfig = {}) {
 
 
 export function defaultTransform(name: string, svg: string, _config: Config = {}) {
-  const config = { plugins: defaultPlugins, multipass: true, ..._config }
+  const config = { plugins: [...defaultPlugins], multipass: true, ..._config }
   const colors = new Set<string>([
     ...extract(svg, 'fill'),
     ...extract(svg, 'stop-color'),
