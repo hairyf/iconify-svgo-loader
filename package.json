@@ -1,10 +1,11 @@
 {
   "name": "iconify-svgo-loader",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Iconify loader optimized using SVGO, Works perfectly with @unocss/preset-icons or unplugin-icons.",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs"
     }
   },
