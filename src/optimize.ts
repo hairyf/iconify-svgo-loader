@@ -65,8 +65,17 @@ export function extract(html: string, key: string) {
 }
 
 export function fillunit(html: string, attr: string, unit: 'px' | 'em') {
-  const value = +extract(html, attr)[0].replace(/[^0-9.]/g, '')
-  const converted = unit === 'px' ? value : value / 16
+  const value = extract(html, attr)[0]
+  if (!value)
+    return html
+  const source = value.replace(/[^a-zA-Z]/g, '')
+  if (source === unit)
+    return html
+  let count = +value.replace(/[^0-9.]/g, '')
+  if (unit === 'em')
+    count = count / 16
+  if (unit === 'px' && source === 'em')
+    count = count * 16
   const regex = new RegExp(`${attr}="\\d+"`, 'g')
-  return html.replace(regex, `${attr}="${converted}${unit}"`)
+  return html.replace(regex, `${attr}="${count}${unit}"`)
 }
