@@ -4,11 +4,11 @@ import { camelize, pascalize, snakelize } from '@iconify/utils/lib'
 import { promises as fs } from 'fs'
 import { defaultTransform } from './optimize'
 
-export function FileSystemSvgoLoader(dir: string, transform?: Transform): CustomIconLoader {
+export function IconifySvgoLoader(dir: string, transform?: Transform): CustomIconLoader {
   return async (name) => {
-
-    if (typeof transform === 'object' || typeof transform === 'undefined')
-      transform = (name, svg) => defaultTransform(name, svg, transform as any)
+    let config = typeof transform === "object" ? transform : {}
+    if (typeof transform === "object" || typeof transform === "undefined")
+      transform = (n2, svg) => defaultTransform(n2, svg, config);
 
     const paths = [
       `${dir}/${name}.svg`,

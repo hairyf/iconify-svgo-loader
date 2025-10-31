@@ -26,7 +26,14 @@ export function optimize(svg: string, options: TransformConfig = {}) {
   if (single)
     config.plugins?.push({ name: 'convertColors', params: { currentColor: true } })
 
-  return _optimize(svg, config).data
+  svg = _optimize(svg, config).data
+
+  if (config.unit) {
+    svg = fillunit(svg, 'width', config.unit)
+    svg = fillunit(svg, 'height', config.unit)
+  }
+
+  return svg
 }
 
 
@@ -55,4 +62,11 @@ export function extract(html: string, key: string) {
   var regex = new RegExp(key + '="([^"]+)"', "g");
   var matches = html.matchAll(regex);
   return [...matches].map(m => m[1])
+}
+
+export function fillunit(html: string, attr: string, unit: 'px' | 'em') {
+  const value = +extract(html, attr)[0].replace(/[^0-9.]/g, '')
+  const converted = unit === 'px' ? value : value / 16
+  const regex = new RegExp(`${attr}="\\d+"`, 'g')
+  return html.replace(regex, `${attr}="${converted}${unit}"`)
 }

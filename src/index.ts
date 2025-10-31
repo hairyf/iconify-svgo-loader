@@ -1,7 +1,7 @@
-import { FileSystemSvgoLoader } from "./loaders";
+import { IconifySvgoLoader } from "./loaders";
 
 export * from './plugins'
 
-export { FileSystemSvgoLoader }
+export { IconifySvgoLoader }
 
-export default FileSystemSvgoLoader
+export default IconifySvgoLoader
