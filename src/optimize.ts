@@ -54,7 +54,14 @@ export function defaultTransform(name: string, svg: string, _config: Config = {}
   if (single)
     config.plugins?.push({ name: 'convertColors', params: { currentColor: true } })
 
-  return _optimize(svg, config).data
+  svg = _optimize(svg, config).data
+
+  if (config.unit) {
+    svg = fillunit(svg, 'width', config.unit)
+    svg = fillunit(svg, 'height', config.unit)
+  }
+
+  return svg
 }
 
 
