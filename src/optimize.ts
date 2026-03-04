@@ -1,21 +1,26 @@
-import { optimize as _optimize, Config } from 'svgo'
+import type { Config } from 'svgo'
+import { optimize as _optimize } from 'svgo'
 import { defaultPlugins } from './config'
+
+interface ExtendedConfig extends Config {
+  unit?: 'px' | 'em'
+}
 
 interface TransformConfig {
   prefix?: string
-  config?: Config
+  config?: ExtendedConfig
 }
 
-export function optimize(svg: string, options: TransformConfig = {}) {
-  let { config = {}, prefix } = options
-  config = { plugins: [...defaultPlugins], multipass: true, ...config }
+export function optimize(svg: string, options: TransformConfig = {}): string {
+  let { config = {} as ExtendedConfig, prefix } = options
+  config = { plugins: [...defaultPlugins], multipass: true, ...config } as ExtendedConfig
 
   const colors = new Set<string>([
     ...extract(svg, 'fill'),
     ...extract(svg, 'stop-color'),
     ...extract(svg, 'stroke'),
   ])
-  
+
   colors.delete('none')
 
   const single = colors.size <= 1
@@ -36,15 +41,14 @@ export function optimize(svg: string, options: TransformConfig = {}) {
   return svg
 }
 
-
-export function defaultTransform(name: string, svg: string, _config: Config = {}) {
-  const config = { plugins: [...defaultPlugins], multipass: true, ..._config }
+export function defaultTransform(name: string, svg: string, _config: ExtendedConfig = {}): string {
+  const config = { plugins: [...defaultPlugins], multipass: true, ..._config } as ExtendedConfig
   const colors = new Set<string>([
     ...extract(svg, 'fill'),
     ...extract(svg, 'stop-color'),
     ...extract(svg, 'stroke'),
   ])
-  
+
   colors.delete('none')
 
   const single = colors.size <= 1
@@ -64,18 +68,17 @@ export function defaultTransform(name: string, svg: string, _config: Config = {}
   return svg
 }
 
-
-export function extract(html: string, key: string) {
-  var regex = new RegExp(key + '="([^"]+)"', "g");
-  var matches = html.matchAll(regex);
+export function extract(html: string, key: string): string[] {
+  const regex = new RegExp(`${key}="([^"]+)"`, 'g')
+  const matches = html.matchAll(regex)
   return [...matches].map(m => m[1])
 }
 
-export function fillunit(html: string, attr: string, unit: 'px' | 'em') {
+export function fillunit(html: string, attr: string, unit: 'px' | 'em'): string {
   const value = extract(html, attr)[0]
   if (!value)
     return html
-  const source = value.replace(/[^a-zA-Z]/g, '')
+  const source = value.replace(/[^a-z]/gi, '')
   if (source === unit)
     return html
   let count = +value.replace(/[^0-9.]/g, '')

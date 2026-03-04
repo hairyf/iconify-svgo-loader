@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import type { Config, PluginConfig } from 'svgo'
-import { defu } from 'defu'
 
-export function defineConfig(config: Config) {
+export function defineConfig(config: Config): Config {
   return config
 }
 
@@ -42,4 +40,4 @@ export const defaultPlugins: PluginConfig[] = [
   'removeDesc',
 ]
 
-export const defaultConfig = { multipass: true, plugins: defaultPlugins }
+export const defaultConfig: Config = { multipass: true, plugins: defaultPlugins }

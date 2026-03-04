@@ -1,9 +1,9 @@
-import path from 'node:path'
 import type { PluginConfig } from 'svgo'
 import type { Plugin } from 'svgo/lib/types'
 import type { CustomPluginFn, ExtendsPluginConfig, PluginsParams } from './types'
+import path from 'node:path'
 
-export function parsePrefix(filepath: string) {
+export function parsePrefix(filepath: string): string {
   return path.basename(filepath).replace('.svg', '')
 }
 
