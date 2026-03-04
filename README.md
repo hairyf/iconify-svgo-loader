@@ -6,6 +6,7 @@ Normal use: default loading of presets and monochrome icon processing, prefixIds
 
 ```ts
 import FileSystemSvgoLoader from 'iconify-svgo-loader'
+
 const loader1 = FileSystemSvgoLoader('./src/assets/fonts', {/* options */})
 ```
 
@@ -24,10 +25,9 @@ const loader2 = FileSystemSvgoLoader('./src/assets/fonts', (name, svgContent) =>
 Complete example：handling monochrome icons, and adding prefixIds
 
 ```ts
-import FileSystemSvgoLoader, { prefixIds, presetDefault, sortAttrs, convertColors } from 'iconify-svgo-loader'
+import FileSystemSvgoLoader, { convertColors, prefixIds, presetDefault, sortAttrs } from 'iconify-svgo-loader'
 
 const loader3 = FileSystemSvgoLoader('./src/assets/fonts', (name, svgContent) => {
-
   // is single color
   const single = patch('fill', svgContent) + patch('stop-color', svgContent) === 1
 
@@ -47,7 +47,7 @@ const loader3 = FileSystemSvgoLoader('./src/assets/fonts', (name, svgContent) =>
 
   return {
     multipass: true,
-    plugins: plugins
+    plugins
   }
 })
 

@@ -1,14 +1,14 @@
-import type { Stats } from 'fs'
+import type { Stats } from 'node:fs'
 import type { CustomIconLoader, Transform } from './types'
+import { promises as fs } from 'node:fs'
 import { camelize, pascalize, snakelize } from '@iconify/utils/lib'
-import { promises as fs } from 'fs'
 import { defaultTransform } from './optimize'
 
 export function IconifySvgoLoader(dir: string, transform?: Transform): CustomIconLoader {
   return async (name) => {
-    let config = typeof transform === "object" ? transform : {}
-    if (typeof transform === "object" || typeof transform === "undefined")
-      transform = (n2, svg) => defaultTransform(n2, svg, config);
+    const config = typeof transform === 'object' ? transform : {}
+    if (typeof transform === 'object' || typeof transform === 'undefined')
+      transform = (n2, svg) => defaultTransform(n2, svg, config)
 
     const paths = [
       `${dir}/${name}.svg`,
@@ -23,7 +23,7 @@ export function IconifySvgoLoader(dir: string, transform?: Transform): CustomIco
       try {
         stat = await fs.lstat(path)
       }
-      catch (err) {
+      catch {
         continue
       }
       if (stat.isFile()) {
